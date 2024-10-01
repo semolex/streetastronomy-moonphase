@@ -1,0 +1,4 @@
+(executable
+ (public_name street_astronomy)
+ (name main)
+ (libraries street_astronomy))
