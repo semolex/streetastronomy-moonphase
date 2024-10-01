@@ -21,6 +21,6 @@
  (description "TBD")
  (depends ocaml dune)
  (tags
-  (astro astronomy celestial-sphere moon sun star))))))
+  (astro astronomy celestial-sphere moon sun star)))
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/reference/dune-project/index.html
