@@ -1,6 +1,6 @@
 (lang dune 3.16)
 
-(name street_astronomy)
+(name street-astronomy)
 
 (generate_opam_files true)
 
@@ -16,7 +16,7 @@
 (documentation https://github.com/semolex/streetastronomy-ocaml)
 
 (package
- (name street_astronomy)
+ (name street-astronomy)
  (synopsis "Small library for astronomy calculations")
  (description "TBD")
  (depends ocaml dune)

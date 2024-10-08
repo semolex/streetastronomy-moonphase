@@ -1,5 +1,4 @@
 (library
-  (name street_astronomy)
-  (public_name street_astronomy)
-  (modules moon julian)
-)
+ (name street_astronomy)
+ (public_name street-astronomy)
+ (modules moon constants chrono))
