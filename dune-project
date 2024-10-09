@@ -19,7 +19,7 @@
  (name street-astronomy)
  (synopsis "Small library for astronomy calculations")
  (description "TBD")
- (depends ocaml dune)
+ (depends ocaml dune calendar)
  (tags
   (astro astronomy celestial-sphere moon sun star)))
 

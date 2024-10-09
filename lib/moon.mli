@@ -45,11 +45,23 @@ module Phase : sig
     illumination percentage.
   *)
 
-  val details_of_date : Chrono.Date.t -> phase_details
+  val details_of_date : CalendarLib.Calendar.Precise.t -> phase_details
+  (** [details_of_date date] returns detailed information about the Moon's phase
+      for a given date of type [CalendarLib.Calendar.Precise.t]. *)
+
+  val details_of_date_int :
+    int -> int -> int -> int -> int -> int -> phase_details
   (**
-    [details_of_date date] returns detailed information about the Moon's phase
-    for a given date of type {!Chrono.Date.t}.
-  *)
+    [details_of_date_int year month day hour minute second] returns detailed information about the Moon's phase
+    for a given date of type int. **)
+
+  val phase_calendar :
+    CalendarLib.Calendar.Precise.t ->
+    CalendarLib.Calendar.Precise.t ->
+    (CalendarLib.Calendar.Precise.t * phase_details) list
+  (**
+    [phase_calendar start_date end_date] returns a list of detailed information about the Moon's phases for the range of dates
+    with arguments of type [CalendarLib.Calendar.Precise.t]. **)
 
   val pp : Format.formatter -> phase -> unit
   (** Pretty-printer for the [phase] type. *)

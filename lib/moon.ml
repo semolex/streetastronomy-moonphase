@@ -1,5 +1,5 @@
 open Constants
-open Chrono
+open CalendarLib.Calendar
 
 module Phase = struct
   type phase =
@@ -41,7 +41,7 @@ module Phase = struct
   (* Correct the calculation of the Moon's age based on the nearest New Moon *)
   let moon_age jd epoch =
     (* Calculate the number of days since the epoch *)
-    let since_epoch = Date.days_since_epoch jd epoch in
+    let since_epoch = jd -. epoch in
 
     (* Calculate the Moon's age in days since the last New Moon *)
     let age = mod_float since_epoch synodic_month in
@@ -51,7 +51,7 @@ module Phase = struct
 
   (* Calculate the mean elongation of the Moon *)
   let mean_elongation_moon jd =
-    let t = Date.julian_centuries_since_epoch jd in
+    let t = (jd -. jd_epoch_2000) /. days_in_julian_century in
     let d =
       297.8501921 +. (445267.1114034 *. t)
       -. (0.0018819 *. t *. t)
@@ -62,7 +62,7 @@ module Phase = struct
 
   (* Calculate the mean anomaly of the Sun *)
   let mean_anomaly_sun jd =
-    let t = Date.julian_centuries_since_epoch jd in
+    let t = (jd -. jd_epoch_2000) /. days_in_julian_century in
     let m =
       357.5291092 +. (35999.0502909 *. t)
       -. (0.0001536 *. t *. t)
@@ -71,7 +71,7 @@ module Phase = struct
     normalize_angle m
 
   let mean_anomaly_moon jd =
-    let t = Date.julian_centuries_since_epoch jd in
+    let t = (jd -. jd_epoch_2000) /. days_in_julian_century in
     let mp =
       134.9633964 +. (477198.8675055 *. t)
       +. (0.0087414 *. t *. t)
@@ -82,7 +82,7 @@ module Phase = struct
 
   (* Mean longitude of the Sun *)
   let mean_longitude_sun jd =
-    let d = Date.days_since_epoch jd jd_epoch_2000 in
+    let d = jd -. jd_epoch_2000 in
     normalize_angle (280.459 +. (0.98564736 *. d))
 
   (* Apparent ecliptic longitude of the Sun *)
@@ -93,7 +93,7 @@ module Phase = struct
     normalize_angle l
 
   let mean_longitude_moon jd =
-    let d = Date.days_since_epoch jd jd_epoch_2000 in
+    let d = jd -. jd_epoch_2000 in
     normalize_angle (218.316 +. (13.176396 *. d))
 
   (* Calculate the Moon's true longitude *)
@@ -174,9 +174,28 @@ module Phase = struct
     let illumination = illumination_percent angle in
     { phase; illumination; age }
 
-  let details_of_date date =
-    let jd = Date.to_julian date in
+  let details_of_date date = details_of_julian (Precise.to_jd date)
+
+  let details_of_date_int year month day hour minute second =
+    let cal_date_time = Precise.make year month day hour minute second in
+    let jd = Precise.to_jd cal_date_time in
     details_of_julian jd
+
+  let phase_calendar start_date end_date =
+    let rec aux current_date acc =
+      if CalendarLib.Calendar.Precise.compare current_date end_date > 0 then
+        List.rev acc (* Reverse the accumulated list to maintain order *)
+      else
+        let phase_details = details_of_date current_date in
+        let new_entry = (current_date, phase_details) in
+        (* Move to the next day using the add function for Precise *)
+        let next_date =
+          CalendarLib.Calendar.Precise.add current_date
+            (CalendarLib.Calendar.Precise.Period.day 1)
+        in
+        aux next_date (new_entry :: acc)
+    in
+    aux start_date []
 
   let pp fmt phase = Format.fprintf fmt "%s" (string_of_phase phase)
 end

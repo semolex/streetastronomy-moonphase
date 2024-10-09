@@ -12,6 +12,7 @@ bug-reports: "https://github.com/semolex/streetastronomy-ocaml/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.16"}
+  "calendar"
   "odoc" {with-doc}
 ]
 build: [
