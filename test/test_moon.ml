@@ -125,6 +125,7 @@ module TestPhase = struct
     List.iter
       (fun ((start_date, end_date), expected_phases) ->
         let phases = phase_calendar start_date end_date in
+        print_calendar phases;
 
         (* Extract just the phase from each phase_details tuple *)
         let actual_phases =

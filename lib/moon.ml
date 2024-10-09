@@ -197,5 +197,23 @@ module Phase = struct
     in
     aux start_date []
 
+  let print_calendar calendar =
+    List.iter
+      (fun (dt, phase_details) ->
+        let date_str =
+          CalendarLib.Printer.DatePrinter.to_string (Precise.to_date dt)
+        in
+        let time_str =
+          CalendarLib.Printer.TimePrinter.to_string (Precise.to_time dt)
+        in
+
+        let phase_str = string_of_phase phase_details.phase in
+        let illumination = phase_details.illumination in
+        let age = phase_details.age in
+
+        Printf.printf "%s: %s, %s %.2f%% Illuminated, Age %.2f days\n" date_str
+          time_str phase_str illumination age)
+      calendar
+
   let pp fmt phase = Format.fprintf fmt "%s" (string_of_phase phase)
 end

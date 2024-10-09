@@ -1,11 +1,12 @@
-(*
-  Description: This module provides different functionsr related to the Moon.
+(**
+  Description: This module provides different functions related to the Moon.
   References:
     - "Astronomical Algorithms" by Jean Meeus, Chapter 47, p. 342
     - https://en.wikipedia.org/wiki/Lunar_phase
     - https://github.com/mourner/suncalc/blob/master/suncalc.js
     - https://stjarnhimlen.se/comp/tutorial.html
 *)
+
 module Phase : sig
   (** Type representing the different phases of the Moon. *)
   type phase =
@@ -23,11 +24,9 @@ module Phase : sig
     age : float;  (** The Moon's age in days since the last New Moon. *)
     illumination : float;  (** The percentage of the Moon's illumination. *)
   }
-  (**
-    Type representing detailed information about the Moon's phase.
-    Contains the classification of the phase, the age of the Moon,
-    and the illumination percentage.
-  *)
+  (** Type representing detailed information about the Moon's phase.
+      Contains the classification of the phase, the age of the Moon,
+      and the illumination percentage. *)
 
   val deg_to_rad : float -> float
   (** [deg_to_rad deg] converts degrees to radians. *)
@@ -53,7 +52,8 @@ module Phase : sig
     int -> int -> int -> int -> int -> int -> phase_details
   (**
     [details_of_date_int year month day hour minute second] returns detailed information about the Moon's phase
-    for a given date of type int. **)
+    for a given date of type int.
+  *)
 
   val phase_calendar :
     CalendarLib.Calendar.Precise.t ->
@@ -61,8 +61,16 @@ module Phase : sig
     (CalendarLib.Calendar.Precise.t * phase_details) list
   (**
     [phase_calendar start_date end_date] returns a list of detailed information about the Moon's phases for the range of dates
-    with arguments of type [CalendarLib.Calendar.Precise.t]. **)
+    with arguments of type [CalendarLib.Calendar.Precise.t].
+  *)
 
   val pp : Format.formatter -> phase -> unit
   (** Pretty-printer for the [phase] type. *)
+
+  val print_calendar :
+    (CalendarLib.Calendar.Precise.t * phase_details) list -> unit
+  (**
+    [print_calendar calendar] prints the Moon phases calendar to the standard output.
+    The argument is a list of tuples, where the first element is the date and the second element is the phase details.
+  *)
 end
