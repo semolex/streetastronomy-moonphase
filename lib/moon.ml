@@ -41,10 +41,10 @@ module Phase = struct
   (* Correct the calculation of the Moon's age based on the nearest New Moon *)
   let moon_age jd epoch =
     (* Calculate the number of days since the epoch *)
-    let days_since_epoch = jd -. epoch in
+    let since_epoch = Date.days_since_epoch jd epoch in
 
     (* Calculate the Moon's age in days since the last New Moon *)
-    let age = mod_float days_since_epoch synodic_month in
+    let age = mod_float since_epoch synodic_month in
 
     (* Ensure the Moon's age falls within [0, synodic_month) range *)
     if age < 0.0 then age +. synodic_month else age
@@ -163,7 +163,7 @@ module Phase = struct
     let phase_angle_effective = abs_float (180.0 -. angle) in
     let phase_angle_rad = deg_to_rad phase_angle_effective in
     (* Calculate the illumination using the cosine formula, scaled appropriately *)
-    (1.0 +. cos phase_angle_rad) /. 2.0
+    (1.0 +. cos phase_angle_rad) /. 2.0 *. 100.0
 
   (* Calculate Moon's phase and illumination for a given Julian Date *)
   let details_of_julian jd =
@@ -172,7 +172,6 @@ module Phase = struct
     let age = moon_age jd jd_new_moon_epoch in
 
     let illumination = illumination_percent angle in
-
     { phase; illumination; age }
 
   let details_of_date date =

@@ -25,11 +25,10 @@ module Date = struct
     let { year; month; day; _ } = date in
     year > 1582 || (year = 1582 && (month > 10 || (month = 10 && day >= 15)))
 
-  let julian_centuries_since_epoch jd =
-    (jd -. jd_epoch_2000) /. days_in_julian_century
-
-  (* Calculate the number of days since a given Julian Date epoch *)
   let days_since_epoch jd epoch = jd -. epoch
+
+  let julian_centuries_since_epoch jd =
+    days_since_epoch jd jd_epoch_2000 /. days_in_julian_century
 
   let from_julian jd =
     (* Adjust Julian date to the correct time *)

@@ -46,7 +46,7 @@ module TestPhase = struct
       (Date.of_ints 2024 12 15 09 02 00, Full);
       (Date.of_ints 2024 12 22 22 18 00, LastQuarter);
       (Date.of_ints 2024 12 30 22 27 00, New);
-      (* Moon phases for 2025  as of *)
+      (* Moon phases for 2025  as of https://aa.usno.navy.mil *)
       (Date.of_ints 2025 01 06 23 56 00, FirstQuarter);
       (Date.of_ints 2025 01 13 22 27 00, Full);
       (Date.of_ints 2025 01 21 20 31 00, LastQuarter);
@@ -60,6 +60,17 @@ module TestPhase = struct
       (Date.of_ints 2024 28 03 19 00 00, WaningGibbous);
       (Date.of_ints 2024 30 08 19 00 00, WaningCrescent);
       (Date.of_ints 2024 10 08 19 00 00, WaxingCrescent);
+      (* Random phases from https://www.timeanddate.com/moon/phases/ *)
+      (Date.of_ints 2024 10 02 19 49 00, New);
+      (Date.of_ints 2024 10 09 10 04 00, WaxingCrescent);
+      (Date.of_ints 2024 10 10 19 55 00, FirstQuarter);
+      (* Moon events from https://www.timeanddate.com/moon/phases/ *)
+      (Date.of_ints 2024 10 17 12 26 00, Full);
+      (* Hunter's Moon *)
+      (Date.of_ints 2024 02 24 09 03 00, Full);
+      (* Micro Moon *)
+      (Date.of_ints 2023 01 06 23 07 00, Full);
+      (* Super Moon *)
     ]
 
   let phase_testable = Alcotest.testable pp ( = )
