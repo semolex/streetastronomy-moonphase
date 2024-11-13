@@ -30,3 +30,6 @@ _opam/
 
 # Zed editor
 .zed/
+
+# Other
+.idea/

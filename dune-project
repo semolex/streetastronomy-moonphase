@@ -5,7 +5,7 @@
 (generate_opam_files true)
 
 (source
- (github semolex/streetastronomy-ocaml))
+ (github semolex/streetastronomy-moonphase))
 
 (authors "Oleksii Semeshchuk")
 
@@ -13,11 +13,11 @@
 
 (license MIT)
 
-(documentation https://github.com/semolex/streetastronomy-ocaml)
+(documentation https://github.com/semolex/streetastronomy-moonphase)
 
 (package
  (name street-astronomy)
- (synopsis "Small library for astronomy calculations")
+ (synopsis "Small library for Moon phase calculations")
  (description "TBD")
  (depends ocaml dune calendar)
  (tags
